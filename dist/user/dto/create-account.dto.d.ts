@@ -1,9 +1,6 @@
-import { User } from '../entitiy/user.entity';
-declare const CreateAccountInput_base: import("@nestjs/common").Type<Pick<User, "id" | "password">>;
-export declare class CreateAccountInput extends CreateAccountInput_base {
+import { CommonInput } from 'src/common/dto/input.dto';
+import { CommonOutPut } from 'src/common/dto/output.dto';
+export declare class CreateAccountInput extends CommonInput {
 }
-export declare class CreateAccountOutput {
-    error?: string;
-    ok: boolean;
+export declare class CreateAccountOutput extends CommonOutPut {
 }
-export {};

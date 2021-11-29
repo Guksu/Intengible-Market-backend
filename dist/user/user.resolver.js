@@ -15,19 +15,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const create_account_dto_1 = require("./dto/create-account.dto");
+const login_dto_1 = require("./dto/login.dto");
 const user_entity_1 = require("./entitiy/user.entity");
 const user_service_1 = require("./user.service");
 let UserResolver = class UserResolver {
     constructor(userService) {
         this.userService = userService;
     }
-    async createAccount(createAccountInput) {
-        return this.userService.craateAccount(createAccountInput);
-    }
     me(user) {
         return user;
     }
+    async createAccount(createAccountInput) {
+        return this.userService.craateAccount(createAccountInput);
+    }
+    async login(loginInput) {
+        return this.userService.login(loginInput);
+    }
 };
+__decorate([
+    (0, graphql_1.Query)((returns) => user_entity_1.User),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_entity_1.User]),
+    __metadata("design:returntype", void 0)
+], UserResolver.prototype, "me", null);
 __decorate([
     (0, graphql_1.Mutation)((type) => create_account_dto_1.CreateAccountOutput),
     __param(0, (0, graphql_1.Args)('input')),
@@ -36,11 +46,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "createAccount", null);
 __decorate([
-    (0, graphql_1.Query)((returns) => user_entity_1.User),
+    (0, graphql_1.Mutation)((type) => login_dto_1.LoginOutPut),
+    __param(0, (0, graphql_1.Args)('input')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_entity_1.User]),
-    __metadata("design:returntype", void 0)
-], UserResolver.prototype, "me", null);
+    __metadata("design:paramtypes", [login_dto_1.LoginInput]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "login", null);
 UserResolver = __decorate([
     (0, graphql_1.Resolver)(),
     __metadata("design:paramtypes", [user_service_1.UserService])

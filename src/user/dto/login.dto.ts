@@ -3,7 +3,7 @@ import { CommonInput } from 'src/common/dto/input.dto';
 import { CommonOutPut } from 'src/common/dto/output.dto';
 
 @InputType()
-export class CreateAccountInput extends CommonInput {}
+export class LoginInput extends CommonInput {}
 
 @ObjectType()
-export class CreateAccountOutput extends CommonOutPut {}
+export class LoginOutPut extends CommonOutPut {}

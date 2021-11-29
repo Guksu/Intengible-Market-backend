@@ -40,4 +40,13 @@ export class User {
       }
     }
   }
+
+  async checkPassword(checkPassword: string): Promise<boolean> {
+    try {
+      return await bcrypt.compare(checkPassword, this.password);
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException();
+    }
+  }
 }

@@ -5,24 +5,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CommonOutPut = void 0;
+exports.LoginOutPut = exports.LoginInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
-let CommonOutPut = class CommonOutPut {
+const input_dto_1 = require("../../common/dto/input.dto");
+const output_dto_1 = require("../../common/dto/output.dto");
+let LoginInput = class LoginInput extends input_dto_1.CommonInput {
 };
-__decorate([
-    (0, graphql_1.Field)((type) => String, { nullable: true }),
-    __metadata("design:type", String)
-], CommonOutPut.prototype, "error", void 0);
-__decorate([
-    (0, graphql_1.Field)((type) => Boolean),
-    __metadata("design:type", Boolean)
-], CommonOutPut.prototype, "ok", void 0);
-CommonOutPut = __decorate([
+LoginInput = __decorate([
+    (0, graphql_1.InputType)()
+], LoginInput);
+exports.LoginInput = LoginInput;
+let LoginOutPut = class LoginOutPut extends output_dto_1.CommonOutPut {
+};
+LoginOutPut = __decorate([
     (0, graphql_1.ObjectType)()
-], CommonOutPut);
-exports.CommonOutPut = CommonOutPut;
-//# sourceMappingURL=output.dto.js.map
+], LoginOutPut);
+exports.LoginOutPut = LoginOutPut;
+//# sourceMappingURL=login.dto.js.map

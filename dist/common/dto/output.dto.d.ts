@@ -1,4 +1,4 @@
-export declare class CoreOutput {
+export declare class CommonOutPut {
     error?: string;
     ok: boolean;
 }

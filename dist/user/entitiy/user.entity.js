@@ -27,6 +27,15 @@ let User = class User {
             }
         }
     }
+    async checkPassword(checkPassword) {
+        try {
+            return await bcrypt.compare(checkPassword, this.password);
+        }
+        catch (error) {
+            console.log(error);
+            throw new common_1.InternalServerErrorException();
+        }
+    }
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),

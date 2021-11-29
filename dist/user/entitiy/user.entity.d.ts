@@ -3,4 +3,5 @@ export declare class User {
     id: string;
     password: string;
     hashPassword(): Promise<void>;
+    checkPassword(checkPassword: string): Promise<boolean>;
 }
