@@ -10,10 +10,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
+const common_1 = require("@nestjs/common");
 const graphql_1 = require("@nestjs/graphql");
 const class_validator_1 = require("class-validator");
 const typeorm_1 = require("typeorm");
+const bcrypt = require("bcrypt");
 let User = class User {
+    async hashPassword() {
+        if (this.password) {
+            try {
+                this.password = await bcrypt.hash(this.password, 10);
+            }
+            catch (error) {
+                console.log(error);
+                throw new common_1.InternalServerErrorException();
+            }
+        }
+    }
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
@@ -32,6 +45,13 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
+__decorate([
+    (0, typeorm_1.BeforeInsert)(),
+    (0, typeorm_1.BeforeUpdate)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], User.prototype, "hashPassword", null);
 User = __decorate([
     (0, graphql_1.InputType)('UserInputType', { isAbstract: true }),
     (0, graphql_1.ObjectType)(),

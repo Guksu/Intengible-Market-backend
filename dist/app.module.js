@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
+const graphql_1 = require("@nestjs/graphql");
 const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("./user/entitiy/user.entity");
 const user_module_1 = require("./user/user.module");
@@ -26,6 +27,9 @@ AppModule = __decorate([
                 database: 'intengible-market',
                 entities: [user_entity_1.User],
                 synchronize: true,
+            }),
+            graphql_1.GraphQLModule.forRoot({
+                autoSchemaFile: true,
             }),
             user_module_1.UserModule,
         ],
