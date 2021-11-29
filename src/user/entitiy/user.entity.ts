@@ -1,6 +1,6 @@
 import { InternalServerErrorException } from '@nestjs/common';
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
-import { IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 import {
   BeforeInsert,
   BeforeUpdate,

@@ -5,7 +5,9 @@ import {
   CreateAccountInput,
   CreateAccountOutput,
 } from './dto/create-account.dto';
+import { EditProfileInput, EditProfileOutput } from './dto/edit-profile.dto';
 import { LoginInput, LoginOutPut } from './dto/login.dto';
+import { UserProfileInput, UserProfileOutput } from './dto/userProfile.dto';
 import { User } from './entitiy/user.entity';
 
 @Injectable()
@@ -45,7 +47,7 @@ export class UserService {
 
       const checkPassword = await loginUser.checkPassword(password);
       if (!checkPassword) {
-        return { ok: false, error: 'Password is wrong, try again' };
+        return { ok: false, error: 'Password is wrong. Try again' };
       }
 
       return { ok: true };
@@ -54,6 +56,37 @@ export class UserService {
         ok: false,
         error: error,
       };
+    }
+  }
+
+  async userProfile({ userNo }: UserProfileInput): Promise<UserProfileOutput> {
+    try {
+      const user = await this.user.findOneOrFail({ userNo });
+      return { ok: true, user };
+    } catch (error) {
+      return { ok: false, error: 'Profile is somthing wrong' };
+    }
+  }
+
+  async editProfile({
+    id,
+    password,
+    userNo,
+  }: EditProfileInput): Promise<EditProfileOutput> {
+    try {
+      const user = await this.user.findOneOrFail({ userNo });
+      if (id) {
+        user.id = id;
+      }
+
+      if (password) {
+        user.password = password;
+      }
+
+      await this.user.save(user);
+      return { ok: true };
+    } catch (error) {
+      return { ok: false, error: "Can't edit your profile. Try again" };
     }
   }
 }
