@@ -3,6 +3,7 @@ import {
   CreateAccountInput,
   CreateAccountOutput,
 } from './dto/create-account.dto';
+import { DeleteUserInput, DeleteUserOutput } from './dto/delete-user.dto';
 import { EditProfileInput, EditProfileOutput } from './dto/edit-profile.dto';
 import { LoginInput, LoginOutPut } from './dto/login.dto';
 import { UserProfileInput, UserProfileOutput } from './dto/userProfile.dto';
@@ -37,5 +38,10 @@ export class UserResolver {
     @Args('input') editProfileInput: EditProfileInput,
   ): Promise<EditProfileOutput> {
     return this.userService.editProfile(editProfileInput);
+  }
+
+  @Mutation((type) => DeleteUserOutput)
+  async deleteUser(@Args('Input') delteUserInput: DeleteUserInput) {
+    return this.userService.deleteUser(delteUserInput);
   }
 }

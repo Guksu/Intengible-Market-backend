@@ -5,6 +5,7 @@ import {
   CreateAccountInput,
   CreateAccountOutput,
 } from './dto/create-account.dto';
+import { DeleteUserInput, DeleteUserOutput } from './dto/delete-user.dto';
 import { EditProfileInput, EditProfileOutput } from './dto/edit-profile.dto';
 import { LoginInput, LoginOutPut } from './dto/login.dto';
 import { UserProfileInput, UserProfileOutput } from './dto/userProfile.dto';
@@ -87,6 +88,36 @@ export class UserService {
       return { ok: true };
     } catch (error) {
       return { ok: false, error: "Can't edit your profile. Try again" };
+    }
+  }
+
+  async deleteUser({
+    id,
+    password,
+  }: DeleteUserInput): Promise<DeleteUserOutput> {
+    try {
+      const delteCheckId = await this.user.findOne(
+        { id },
+        { select: ['password'] },
+      );
+      const deleteCheckPassword = await delteCheckId.checkPassword(password);
+
+      if (!delteCheckId) {
+        return { ok: false, error: "Check again you'r ID" };
+      }
+
+      if (!deleteCheckPassword) {
+        return { ok: false, error: "Check again you'r Password" };
+      }
+
+      await this.user.delete(delteCheckId);
+
+      return { ok: true };
+    } catch (error) {
+      return {
+        ok: false,
+        error: error,
+      };
     }
   }
 }

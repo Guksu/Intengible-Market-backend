@@ -78,6 +78,26 @@ let UserService = class UserService {
             return { ok: false, error: "Can't edit your profile. Try again" };
         }
     }
+    async deleteUser({ id, password, }) {
+        try {
+            const delteCheckId = await this.user.findOne({ id }, { select: ['password'] });
+            const deleteCheckPassword = await delteCheckId.checkPassword(password);
+            if (!delteCheckId) {
+                return { ok: false, error: "Check again you'r ID" };
+            }
+            if (!deleteCheckPassword) {
+                return { ok: false, error: "Check again you'r Password" };
+            }
+            await this.user.delete(delteCheckId);
+            return { ok: true };
+        }
+        catch (error) {
+            return {
+                ok: false,
+                error: error,
+            };
+        }
+    }
 };
 UserService = __decorate([
     (0, common_1.Injectable)(),
