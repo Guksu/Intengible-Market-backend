@@ -1,14 +1,16 @@
 import { InternalServerErrorException } from '@nestjs/common';
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
-import { IsNumber, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Product } from 'src/product/entitiy/product.entity';
 
 @InputType('UserInputType', { isAbstract: true })
 @ObjectType()
@@ -27,6 +29,12 @@ export class User {
   @Field((type) => String)
   @IsString()
   password: string;
+
+  @Field((type) => [Product])
+  @OneToMany((type) => Product, (product) => product.seller, {
+    onDelete: 'CASCADE',
+  })
+  product: Product[];
 
   @BeforeInsert()
   @BeforeUpdate()

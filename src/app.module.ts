@@ -3,6 +3,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entitiy/user.entity';
 import { UserModule } from './user/user.module';
+import { ProductModule } from './product/product.module';
+import { Product } from './product/entitiy/product.entity';
 require('dotenv').config();
 
 @Module({
@@ -14,13 +16,14 @@ require('dotenv').config();
       username: 'root',
       password: process.env.PASSWORD,
       database: 'intengible-market',
-      entities: [User],
+      entities: [User, Product],
       synchronize: true,
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
     }),
     UserModule,
+    ProductModule,
   ],
   controllers: [],
   providers: [],

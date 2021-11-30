@@ -12,6 +12,8 @@ const graphql_1 = require("@nestjs/graphql");
 const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("./user/entitiy/user.entity");
 const user_module_1 = require("./user/user.module");
+const product_module_1 = require("./product/product.module");
+const product_entity_1 = require("./product/entitiy/product.entity");
 require('dotenv').config();
 let AppModule = class AppModule {
 };
@@ -25,13 +27,14 @@ AppModule = __decorate([
                 username: 'root',
                 password: process.env.PASSWORD,
                 database: 'intengible-market',
-                entities: [user_entity_1.User],
+                entities: [user_entity_1.User, product_entity_1.Product],
                 synchronize: true,
             }),
             graphql_1.GraphQLModule.forRoot({
                 autoSchemaFile: true,
             }),
             user_module_1.UserModule,
+            product_module_1.ProductModule,
         ],
         controllers: [],
         providers: [],
