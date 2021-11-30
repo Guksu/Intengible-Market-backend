@@ -1,6 +1,5 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
-import { User } from 'src/user/entitiy/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @InputType('ProductInputType', { isAbstract: true })
 @ObjectType()
@@ -10,7 +9,7 @@ export class Product {
   @Field((type) => Number)
   productNo: number;
 
-  @Column()
+  @Column({ unique: true })
   @Field((type) => String)
   name: string;
 
@@ -26,7 +25,11 @@ export class Product {
   @Field((type) => Number)
   volume: number;
 
-  @Field((type) => User)
-  @ManyToOne((type) => User, (user) => user.product, { onDelete: 'CASCADE' })
-  seller: User;
+  @Column()
+  @Field((type) => Number)
+  nowVolume: number;
+
+  @Column()
+  @Field((type) => Number)
+  seller: number;
 }
