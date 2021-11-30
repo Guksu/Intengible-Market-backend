@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import {
   PurchaseProductInput,
   PurchaseProductOutput,
@@ -9,6 +9,10 @@ import {
   RegisterProductInput,
   RegisterProductOutput,
 } from './dto/registerProduct.dto';
+import {
+  SearchProductInput,
+  SearchProductOutput,
+} from './dto/searchProduct.dto';
 import { Product } from './entitiy/product.entity';
 import { PurchaseProduct } from './entitiy/purchaseProduct.entity';
 
@@ -64,6 +68,24 @@ export class ProductService {
 
       await this.purchase.save(this.purchase.create({ name, volume, buyer }));
       return { ok: true };
+    } catch (error) {
+      return { ok: false, error: error };
+    }
+  }
+
+  async searchProduct({
+    name,
+  }: SearchProductInput): Promise<SearchProductOutput> {
+    try {
+      const searchP = await this.product.find({
+        where: { name: Like(`%${name}%`) },
+      });
+
+      if (searchP[0] === undefined) {
+        return { ok: false, error: "Can't find Product" };
+      }
+
+      return { ok: true, product: searchP };
     } catch (error) {
       return { ok: false, error: error };
     }

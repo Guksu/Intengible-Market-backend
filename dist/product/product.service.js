@@ -60,6 +60,20 @@ let ProductService = class ProductService {
             return { ok: false, error: error };
         }
     }
+    async searchProduct({ name, }) {
+        try {
+            const searchP = await this.product.find({
+                where: { name: (0, typeorm_2.Like)(`%${name}%`) },
+            });
+            if (searchP[0] === undefined) {
+                return { ok: false, error: "Can't find Product" };
+            }
+            return { ok: true, product: searchP };
+        }
+        catch (error) {
+            return { ok: false, error: error };
+        }
+    }
 };
 ProductService = __decorate([
     (0, common_1.Injectable)(),
