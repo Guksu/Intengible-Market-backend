@@ -1,5 +1,8 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { User } from 'src/user/entitiy/user.entity';
+import {
+  PurchaseProductInput,
+  PurchaseProductOutput,
+} from './dto/purchaseProduct.dto';
 import {
   RegisterProductInput,
   RegisterProductOutput,
@@ -11,9 +14,16 @@ export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
 
   @Mutation((type) => RegisterProductOutput)
-  registerProduct(
+  async registerProduct(
     @Args('input') registerProductInput: RegisterProductInput,
   ): Promise<RegisterProductOutput> {
     return this.productService.registerProduct(registerProductInput);
+  }
+
+  @Mutation((type) => PurchaseProductOutput)
+  async purchaseProduct(
+    @Args('input') purchaseProductInput: PurchaseProductInput,
+  ): Promise<PurchaseProductOutput> {
+    return this.productService.purchaseProduct(purchaseProductInput);
   }
 }

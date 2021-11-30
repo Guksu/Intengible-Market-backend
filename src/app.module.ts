@@ -5,6 +5,7 @@ import { User } from './user/entitiy/user.entity';
 import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
 import { Product } from './product/entitiy/product.entity';
+import { PurchaseProduct } from './product/entitiy/purchaseProduct.entity';
 require('dotenv').config();
 
 @Module({
@@ -16,7 +17,7 @@ require('dotenv').config();
       username: 'root',
       password: process.env.PASSWORD,
       database: 'intengible-market',
-      entities: [User, Product],
+      entities: [User, Product, PurchaseProduct],
       synchronize: true,
     }),
     GraphQLModule.forRoot({

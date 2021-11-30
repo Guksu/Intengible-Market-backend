@@ -14,15 +14,18 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
-const user_entity_1 = require("../user/entitiy/user.entity");
+const purchaseProduct_dto_1 = require("./dto/purchaseProduct.dto");
 const registerProduct_dto_1 = require("./dto/registerProduct.dto");
 const product_service_1 = require("./product.service");
 let ProductResolver = class ProductResolver {
     constructor(productService) {
         this.productService = productService;
     }
-    registerProduct(registerProductInput) {
+    async registerProduct(registerProductInput) {
         return this.productService.registerProduct(registerProductInput);
+    }
+    async purchaseProduct(purchaseProductInput) {
+        return this.productService.purchaseProduct(purchaseProductInput);
     }
 };
 __decorate([
@@ -32,6 +35,13 @@ __decorate([
     __metadata("design:paramtypes", [registerProduct_dto_1.RegisterProductInput]),
     __metadata("design:returntype", Promise)
 ], ProductResolver.prototype, "registerProduct", null);
+__decorate([
+    (0, graphql_1.Mutation)((type) => purchaseProduct_dto_1.PurchaseProductOutput),
+    __param(0, (0, graphql_1.Args)('input')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [purchaseProduct_dto_1.PurchaseProductInput]),
+    __metadata("design:returntype", Promise)
+], ProductResolver.prototype, "purchaseProduct", null);
 ProductResolver = __decorate([
     (0, graphql_1.Resolver)(),
     __metadata("design:paramtypes", [product_service_1.ProductService])

@@ -17,9 +17,11 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const product_entity_1 = require("./entitiy/product.entity");
+const purchaseProduct_entity_1 = require("./entitiy/purchaseProduct.entity");
 let ProductService = class ProductService {
-    constructor(product) {
+    constructor(product, purchase) {
         this.product = product;
+        this.purchase = purchase;
     }
     async registerProduct({ name, price, description, volume, seller, }) {
         try {
@@ -41,11 +43,30 @@ let ProductService = class ProductService {
             return { ok: false, error: error };
         }
     }
+    async purchaseProduct({ name, volume, buyer, }) {
+        try {
+            const checkProduct = await this.product.findOne({ name });
+            if (checkProduct.nowVolume === 0) {
+                return { ok: false, error: 'This Product is sold out!' };
+            }
+            else {
+                checkProduct.nowVolume -= volume;
+                await this.product.save(checkProduct);
+            }
+            await this.purchase.save(this.purchase.create({ name, volume, buyer }));
+            return { ok: true };
+        }
+        catch (error) {
+            return { ok: false, error: error };
+        }
+    }
 };
 ProductService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(product_entity_1.Product)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(1, (0, typeorm_1.InjectRepository)(purchaseProduct_entity_1.PurchaseProduct)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository])
 ], ProductService);
 exports.ProductService = ProductService;
 //# sourceMappingURL=product.service.js.map

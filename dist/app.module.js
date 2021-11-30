@@ -14,6 +14,7 @@ const user_entity_1 = require("./user/entitiy/user.entity");
 const user_module_1 = require("./user/user.module");
 const product_module_1 = require("./product/product.module");
 const product_entity_1 = require("./product/entitiy/product.entity");
+const purchaseProduct_entity_1 = require("./product/entitiy/purchaseProduct.entity");
 require('dotenv').config();
 let AppModule = class AppModule {
 };
@@ -27,7 +28,7 @@ AppModule = __decorate([
                 username: 'root',
                 password: process.env.PASSWORD,
                 database: 'intengible-market',
-                entities: [user_entity_1.User, product_entity_1.Product],
+                entities: [user_entity_1.User, product_entity_1.Product, purchaseProduct_entity_1.PurchaseProduct],
                 synchronize: true,
             }),
             graphql_1.GraphQLModule.forRoot({

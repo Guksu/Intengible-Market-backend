@@ -2,15 +2,22 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {
+  PurchaseProductInput,
+  PurchaseProductOutput,
+} from './dto/purchaseProduct.dto';
+import {
   RegisterProductInput,
   RegisterProductOutput,
 } from './dto/registerProduct.dto';
 import { Product } from './entitiy/product.entity';
+import { PurchaseProduct } from './entitiy/purchaseProduct.entity';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(Product) private readonly product: Repository<Product>,
+    @InjectRepository(PurchaseProduct)
+    private readonly purchase: Repository<PurchaseProduct>,
   ) {}
 
   async registerProduct({
@@ -35,6 +42,27 @@ export class ProductService {
       });
 
       await this.product.save(newProduct);
+      return { ok: true };
+    } catch (error) {
+      return { ok: false, error: error };
+    }
+  }
+
+  async purchaseProduct({
+    name,
+    volume,
+    buyer,
+  }: PurchaseProductInput): Promise<PurchaseProductOutput> {
+    try {
+      const checkProduct = await this.product.findOne({ name });
+      if (checkProduct.nowVolume === 0) {
+        return { ok: false, error: 'This Product is sold out!' };
+      } else {
+        checkProduct.nowVolume -= volume;
+        await this.product.save(checkProduct);
+      }
+
+      await this.purchase.save(this.purchase.create({ name, volume, buyer }));
       return { ok: true };
     } catch (error) {
       return { ok: false, error: error };
