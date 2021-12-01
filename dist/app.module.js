@@ -15,8 +15,16 @@ const user_module_1 = require("./user/user.module");
 const product_module_1 = require("./product/product.module");
 const product_entity_1 = require("./product/entitiy/product.entity");
 const purchaseProduct_entity_1 = require("./product/entitiy/purchaseProduct.entity");
+const jwt_middleware_1 = require("./user/jwt.middleware");
+const guard_module_1 = require("./guard/guard.module");
 require('dotenv').config();
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer.apply(jwt_middleware_1.JwtMiddleware).forRoutes({
+            path: '/graphql',
+            method: common_1.RequestMethod.POST,
+        });
+    }
 };
 AppModule = __decorate([
     (0, common_1.Module)({
@@ -33,9 +41,11 @@ AppModule = __decorate([
             }),
             graphql_1.GraphQLModule.forRoot({
                 autoSchemaFile: true,
+                context: ({ req }) => ({ user: req['user'] }),
             }),
             user_module_1.UserModule,
             product_module_1.ProductModule,
+            guard_module_1.GuardModule,
         ],
         controllers: [],
         providers: [],

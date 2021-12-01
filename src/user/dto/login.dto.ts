@@ -1,4 +1,4 @@
-import { InputType, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { CommonInput } from 'src/common/dto/input.dto';
 import { CommonOutPut } from 'src/common/dto/output.dto';
 
@@ -6,4 +6,7 @@ import { CommonOutPut } from 'src/common/dto/output.dto';
 export class LoginInput extends CommonInput {}
 
 @ObjectType()
-export class LoginOutPut extends CommonOutPut {}
+export class LoginOutPut extends CommonOutPut {
+  @Field((type) => String, { nullable: true })
+  token?: string;
+}

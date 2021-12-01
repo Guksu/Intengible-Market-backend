@@ -14,11 +14,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
+const auth_user_decorater_1 = require("../guard/auth-user.decorater");
 const create_account_dto_1 = require("./dto/create-account.dto");
 const delete_user_dto_1 = require("./dto/delete-user.dto");
 const edit_profile_dto_1 = require("./dto/edit-profile.dto");
 const login_dto_1 = require("./dto/login.dto");
 const userProfile_dto_1 = require("./dto/userProfile.dto");
+const user_entity_1 = require("./entitiy/user.entity");
 const user_service_1 = require("./user.service");
 let UserResolver = class UserResolver {
     constructor(userService) {
@@ -33,8 +35,8 @@ let UserResolver = class UserResolver {
     async userProfile(userProfileInput) {
         return this.userService.userProfile(userProfileInput);
     }
-    async editProfile(editProfileInput) {
-        return this.userService.editProfile(editProfileInput);
+    async editProfile(authUser, editProfileInput) {
+        return this.userService.editProfile(authUser.userNo, editProfileInput);
     }
     async deleteUser(delteUserInput) {
         return this.userService.deleteUser(delteUserInput);
@@ -63,9 +65,11 @@ __decorate([
 ], UserResolver.prototype, "userProfile", null);
 __decorate([
     (0, graphql_1.Mutation)((type) => edit_profile_dto_1.EditProfileOutput),
-    __param(0, (0, graphql_1.Args)('input')),
+    __param(0, (0, auth_user_decorater_1.AuthUser)()),
+    __param(1, (0, graphql_1.Args)('input')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [edit_profile_dto_1.EditProfileInput]),
+    __metadata("design:paramtypes", [user_entity_1.User,
+        edit_profile_dto_1.EditProfileInput]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "editProfile", null);
 __decorate([

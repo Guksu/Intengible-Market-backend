@@ -11,6 +11,6 @@ export declare class UserService {
     craateAccount({ id, password, }: CreateAccountInput): Promise<CreateAccountOutput>;
     login({ id, password }: LoginInput): Promise<LoginOutPut>;
     userProfile({ userNo }: UserProfileInput): Promise<UserProfileOutput>;
-    editProfile({ id, password, userNo, }: EditProfileInput): Promise<EditProfileOutput>;
+    editProfile(userNo: number, { id, password }: EditProfileInput): Promise<EditProfileOutput>;
     deleteUser({ id, password, }: DeleteUserInput): Promise<DeleteUserOutput>;
 }
