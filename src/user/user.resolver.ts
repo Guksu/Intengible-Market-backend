@@ -1,5 +1,4 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { AuthUser } from 'src/guard/auth-user.decorater';
 import {
   CreateAccountInput,
   CreateAccountOutput,
@@ -36,10 +35,9 @@ export class UserResolver {
 
   @Mutation((type) => EditProfileOutput)
   async editProfile(
-    @AuthUser() authUser: User,
     @Args('input') editProfileInput: EditProfileInput,
   ): Promise<EditProfileOutput> {
-    return this.userService.editProfile(authUser.userNo, editProfileInput);
+    return this.userService.editProfile(editProfileInput);
   }
 
   @Mutation((type) => DeleteUserOutput)

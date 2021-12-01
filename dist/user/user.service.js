@@ -65,9 +65,9 @@ let UserService = class UserService {
             return { ok: false, error: 'Profile is somthing wrong' };
         }
     }
-    async editProfile(userNo, { id, password }) {
+    async editProfile({ id, password, userNo, }) {
         try {
-            const user = await this.user.findOneOrFail({ userNo });
+            const user = await this.user.findOne(userNo);
             if (id) {
                 user.id = id;
             }

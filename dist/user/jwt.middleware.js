@@ -24,10 +24,8 @@ let JwtMiddleware = class JwtMiddleware {
             try {
                 const decoded = jwt.verify(token.toString(), process.env.TOKEN_KEY);
                 if (typeof decoded === 'object' && decoded.hasOwnProperty('id')) {
-                    const { user, ok } = await this.userService.userProfile(decoded['id']);
-                    if (ok) {
-                        req['user'] = user;
-                    }
+                    const user = await this.userService.userProfile(decoded['id']);
+                    req['user'] = user;
                 }
             }
             catch (error) { }
