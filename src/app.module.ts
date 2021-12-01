@@ -6,6 +6,9 @@ import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
 import { Product } from './product/entitiy/product.entity';
 import { PurchaseProduct } from './product/entitiy/purchaseProduct.entity';
+import { BoardModule } from './board/board.module';
+import { RequestBoard } from './board/entity/request.entity';
+import { ReviewBoard } from './board/entity/review.entity';
 require('dotenv').config();
 
 @Module({
@@ -17,7 +20,7 @@ require('dotenv').config();
       username: 'root',
       password: process.env.PASSWORD,
       database: 'intengible-market',
-      entities: [User, Product, PurchaseProduct],
+      entities: [User, Product, PurchaseProduct, RequestBoard, ReviewBoard],
       synchronize: true,
     }),
     GraphQLModule.forRoot({
@@ -25,6 +28,7 @@ require('dotenv').config();
     }),
     UserModule,
     ProductModule,
+    BoardModule,
   ],
   controllers: [],
   providers: [],

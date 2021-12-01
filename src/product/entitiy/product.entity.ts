@@ -15,6 +15,10 @@ export class Product {
 
   @Column()
   @Field((type) => String)
+  img: string;
+
+  @Column()
+  @Field((type) => String)
   description: string;
 
   @Column()
