@@ -10,8 +10,6 @@ import { EditProfileInput, EditProfileOutput } from './dto/edit-profile.dto';
 import { LoginInput, LoginOutPut } from './dto/login.dto';
 import { UserProfileInput, UserProfileOutput } from './dto/userProfile.dto';
 import { User } from './entitiy/user.entity';
-import * as jwt from 'jsonwebtoken';
-require('dotenv').config();
 
 @Injectable()
 export class UserService {
@@ -53,8 +51,7 @@ export class UserService {
         return { ok: false, error: 'Password is wrong. Try again' };
       }
 
-      const token = jwt.sign({ id: loginUser.id }, process.env.TOKEN_KEY);
-      return { ok: true, token: token };
+      return { ok: true };
     } catch (error) {
       return {
         ok: false,
@@ -65,7 +62,7 @@ export class UserService {
 
   async userProfile({ userNo }: UserProfileInput): Promise<UserProfileOutput> {
     try {
-      const user = await this.user.findOneOrFail({ userNo });
+      const user = await this.user.findOneOrFail(userNo);
       return { ok: true, user };
     } catch (error) {
       return { ok: false, error: 'Profile is somthing wrong' };

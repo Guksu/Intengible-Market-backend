@@ -17,8 +17,6 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./entitiy/user.entity");
-const jwt = require("jsonwebtoken");
-require('dotenv').config();
 let UserService = class UserService {
     constructor(user) {
         this.user = user;
@@ -46,8 +44,7 @@ let UserService = class UserService {
             if (!checkPassword) {
                 return { ok: false, error: 'Password is wrong. Try again' };
             }
-            const token = jwt.sign({ id: loginUser.id }, process.env.TOKEN_KEY);
-            return { ok: true, token: token };
+            return { ok: true };
         }
         catch (error) {
             return {
@@ -58,7 +55,7 @@ let UserService = class UserService {
     }
     async userProfile({ userNo }) {
         try {
-            const user = await this.user.findOneOrFail({ userNo });
+            const user = await this.user.findOneOrFail(userNo);
             return { ok: true, user };
         }
         catch (error) {

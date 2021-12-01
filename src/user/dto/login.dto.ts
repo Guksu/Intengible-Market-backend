@@ -6,7 +6,4 @@ import { CommonOutPut } from 'src/common/dto/output.dto';
 export class LoginInput extends CommonInput {}
 
 @ObjectType()
-export class LoginOutPut extends CommonOutPut {
-  @Field((type) => String, { nullable: true })
-  token?: string;
-}
+export class LoginOutPut extends CommonOutPut {}
