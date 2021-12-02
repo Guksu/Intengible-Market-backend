@@ -14,12 +14,14 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
+const jwt_1 = require("@nestjs/jwt");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./entitiy/user.entity");
 let UserService = class UserService {
-    constructor(user) {
+    constructor(user, jwtService) {
         this.user = user;
+        this.jwtService = jwtService;
     }
     async craateAccount({ id, password, }) {
         try {
@@ -44,7 +46,9 @@ let UserService = class UserService {
             if (!checkPassword) {
                 return { ok: false, error: 'Password is wrong. Try again' };
             }
-            return { ok: true };
+            const payload = { id };
+            const accessToken = await this.jwtService.sign(payload);
+            return { ok: true, token: accessToken };
         }
         catch (error) {
             return {
@@ -53,9 +57,9 @@ let UserService = class UserService {
             };
         }
     }
-    async userProfile({ userNo }) {
+    async userProfile({ id }) {
         try {
-            const user = await this.user.findOneOrFail(userNo);
+            const user = await this.user.findOneOrFail({ id });
             return { ok: true, user };
         }
         catch (error) {
@@ -99,7 +103,8 @@ let UserService = class UserService {
 UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        jwt_1.JwtService])
 ], UserService);
 exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map

@@ -25,6 +25,14 @@ require('dotenv').config();
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
+      context: ({ req, connection }) => {
+        if (req) {
+          const user = req.headers.authorization;
+          return { ...req, user };
+        } else {
+          return connection;
+        }
+      },
     }),
     UserModule,
     ProductModule,

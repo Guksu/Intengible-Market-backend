@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {
@@ -14,7 +15,9 @@ import { User } from './entitiy/user.entity';
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private readonly user: Repository<User>,
+    @InjectRepository(User)
+    private readonly user: Repository<User>,
+    private readonly jwtService: JwtService,
   ) {}
 
   async craateAccount({
@@ -51,7 +54,9 @@ export class UserService {
         return { ok: false, error: 'Password is wrong. Try again' };
       }
 
-      return { ok: true };
+      const payload = { id };
+      const accessToken = await this.jwtService.sign(payload);
+      return { ok: true, token: accessToken };
     } catch (error) {
       return {
         ok: false,
@@ -60,9 +65,9 @@ export class UserService {
     }
   }
 
-  async userProfile({ userNo }: UserProfileInput): Promise<UserProfileOutput> {
+  async userProfile({ id }: UserProfileInput): Promise<UserProfileOutput> {
     try {
-      const user = await this.user.findOneOrFail(userNo);
+      const user = await this.user.findOneOrFail({ id });
       return { ok: true, user };
     } catch (error) {
       return { ok: false, error: 'Profile is somthing wrong' };

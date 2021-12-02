@@ -36,6 +36,15 @@ AppModule = __decorate([
             }),
             graphql_1.GraphQLModule.forRoot({
                 autoSchemaFile: true,
+                context: ({ req, connection }) => {
+                    if (req) {
+                        const user = req.headers.authorization;
+                        return Object.assign(Object.assign({}, req), { user });
+                    }
+                    else {
+                        return connection;
+                    }
+                },
             }),
             user_module_1.UserModule,
             product_module_1.ProductModule,

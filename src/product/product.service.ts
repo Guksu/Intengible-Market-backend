@@ -19,7 +19,8 @@ import { PurchaseProduct } from './entitiy/purchaseProduct.entity';
 @Injectable()
 export class ProductService {
   constructor(
-    @InjectRepository(Product) private readonly product: Repository<Product>,
+    @InjectRepository(Product)
+    private readonly product: Repository<Product>,
     @InjectRepository(PurchaseProduct)
     private readonly purchase: Repository<PurchaseProduct>,
   ) {}
