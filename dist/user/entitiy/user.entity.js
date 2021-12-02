@@ -15,6 +15,8 @@ const graphql_1 = require("@nestjs/graphql");
 const class_validator_1 = require("class-validator");
 const typeorm_1 = require("typeorm");
 const bcrypt = require("bcrypt");
+const product_entity_1 = require("../../product/entitiy/product.entity");
+const purchaseProduct_entity_1 = require("../../product/entitiy/purchaseProduct.entity");
 let User = class User {
     async hashPassword() {
         if (this.password) {
@@ -54,6 +56,16 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => [product_entity_1.Product], { nullable: true }),
+    (0, typeorm_1.OneToMany)((type) => product_entity_1.Product, (Product) => Product.seller),
+    __metadata("design:type", Array)
+], User.prototype, "product", void 0);
+__decorate([
+    (0, graphql_1.Field)((type) => [purchaseProduct_entity_1.PurchaseProduct], { nullable: true }),
+    (0, typeorm_1.OneToMany)((type) => purchaseProduct_entity_1.PurchaseProduct, (PurchaseProduct) => PurchaseProduct.buyer),
+    __metadata("design:type", Array)
+], User.prototype, "PurchaseProduct", void 0);
 __decorate([
     (0, typeorm_1.BeforeInsert)(),
     (0, typeorm_1.BeforeUpdate)(),

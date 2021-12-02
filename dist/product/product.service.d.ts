@@ -1,3 +1,4 @@
+import { User } from 'src/user/entitiy/user.entity';
 import { Repository } from 'typeorm';
 import { PurchaseProductInput, PurchaseProductOutput } from './dto/purchaseProduct.dto';
 import { RegisterProductInput, RegisterProductOutput } from './dto/registerProduct.dto';
@@ -8,7 +9,7 @@ export declare class ProductService {
     private readonly product;
     private readonly purchase;
     constructor(product: Repository<Product>, purchase: Repository<PurchaseProduct>);
-    registerProduct({ name, price, description, volume, seller, }: RegisterProductInput): Promise<RegisterProductOutput>;
-    purchaseProduct({ name, volume, buyer, }: PurchaseProductInput): Promise<PurchaseProductOutput>;
+    registerProduct(user: User, registerProductInput: RegisterProductInput): Promise<RegisterProductOutput>;
+    purchaseProduct(user: User, { name, volume }: PurchaseProductInput): Promise<PurchaseProductOutput>;
     searchProduct({ name, }: SearchProductInput): Promise<SearchProductOutput>;
 }

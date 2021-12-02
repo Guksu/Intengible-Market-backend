@@ -10,7 +10,11 @@ exports.RegisterProductOutput = exports.RegisterProductInput = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const output_dto_1 = require("../../common/dto/output.dto");
 const product_entity_1 = require("../entitiy/product.entity");
-let RegisterProductInput = class RegisterProductInput extends (0, graphql_1.OmitType)(product_entity_1.Product, ['productNo']) {
+let RegisterProductInput = class RegisterProductInput extends (0, graphql_1.OmitType)(product_entity_1.Product, [
+    'productNo',
+    'nowVolume',
+    'seller',
+]) {
 };
 RegisterProductInput = __decorate([
     (0, graphql_1.InputType)()

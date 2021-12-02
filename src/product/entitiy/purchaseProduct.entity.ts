@@ -1,5 +1,6 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/user/entitiy/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @InputType('PurchaseProductInputType', { isAbstract: true })
 @ObjectType()
@@ -17,7 +18,7 @@ export class PurchaseProduct {
   @Field((type) => Number)
   volume: number;
 
-  @Column()
-  @Field((type) => Number)
-  buyer: number;
+  @Field((type) => User)
+  @ManyToOne((type) => User, (User) => User.PurchaseProduct, { cascade: true })
+  buyer: User;
 }

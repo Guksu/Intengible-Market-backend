@@ -1,6 +1,6 @@
 import { CommonOutPut } from 'src/common/dto/output.dto';
 import { Product } from '../entitiy/product.entity';
-declare const RegisterProductInput_base: import("@nestjs/common").Type<Omit<Product, "productNo">>;
+declare const RegisterProductInput_base: import("@nestjs/common").Type<Omit<Product, "productNo" | "nowVolume" | "seller">>;
 export declare class RegisterProductInput extends RegisterProductInput_base {
 }
 export declare class RegisterProductOutput extends CommonOutPut {

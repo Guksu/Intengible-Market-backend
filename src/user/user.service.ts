@@ -74,44 +74,45 @@ export class UserService {
     }
   }
 
-  async editProfile({
-    password,
-    userNo,
-  }: EditProfileInput): Promise<EditProfileOutput> {
+  async editProfile(
+    user: User,
+    { id, password }: EditProfileInput,
+  ): Promise<EditProfileOutput> {
     try {
-      const user = await this.user.findOne(userNo);
+      const checkUser = await this.user.findOne(user.userNo);
+
+      if (id) {
+        checkUser.id = id;
+      }
 
       if (password) {
         user.password = password;
       }
 
-      await this.user.save(user);
+      await this.user.save(checkUser);
       return { ok: true };
     } catch (error) {
       return { ok: false, error: "Can't edit your profile. Try again" };
     }
   }
 
-  async deleteUser({
-    id,
-    password,
-  }: DeleteUserInput): Promise<DeleteUserOutput> {
+  async deleteUser(
+    user: User,
+    { id, password }: DeleteUserInput,
+  ): Promise<DeleteUserOutput> {
     try {
-      const delteCheckId = await this.user.findOne(
-        { id },
-        { select: ['password'] },
-      );
-      const deleteCheckPassword = await delteCheckId.checkPassword(password);
+      const delteCheckUser = await this.user.findOne(user.userNo);
+      const deleteCheckPassword = await delteCheckUser.checkPassword(password);
 
-      if (!delteCheckId) {
-        return { ok: false, error: "Check again you'r ID" };
+      if (id != delteCheckUser.id) {
+        return { ok: false, error: 'Check again' };
       }
 
       if (!deleteCheckPassword) {
         return { ok: false, error: "Check again you'r Password" };
       }
 
-      await this.user.delete(delteCheckId);
+      await this.user.delete(delteCheckUser);
 
       return { ok: true };
     } catch (error) {

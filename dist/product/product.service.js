@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const user_entity_1 = require("../user/entitiy/user.entity");
 const typeorm_2 = require("typeorm");
 const product_entity_1 = require("./entitiy/product.entity");
 const purchaseProduct_entity_1 = require("./entitiy/purchaseProduct.entity");
@@ -23,19 +24,15 @@ let ProductService = class ProductService {
         this.product = product;
         this.purchase = purchase;
     }
-    async registerProduct({ name, price, description, volume, seller, }) {
+    async registerProduct(user, registerProductInput) {
         try {
-            const exists = await this.product.findOne({ name });
+            const exists = await this.product.findOne(registerProductInput.name);
             if (exists) {
                 return { ok: false, error: 'Product name is already exist.' };
             }
-            const newProduct = this.product.create({
-                name,
-                price,
-                description,
-                volume,
-                seller,
-            });
+            const newProduct = this.product.create(registerProductInput);
+            newProduct.nowVolume = newProduct.volume;
+            newProduct.seller = user;
             await this.product.save(newProduct);
             return { ok: true };
         }
@@ -43,7 +40,7 @@ let ProductService = class ProductService {
             return { ok: false, error: error };
         }
     }
-    async purchaseProduct({ name, volume, buyer, }) {
+    async purchaseProduct(user, { name, volume }) {
         try {
             const checkProduct = await this.product.findOne({ name });
             if (checkProduct.nowVolume === 0) {
@@ -53,7 +50,7 @@ let ProductService = class ProductService {
                 checkProduct.nowVolume -= volume;
                 await this.product.save(checkProduct);
             }
-            await this.purchase.save(this.purchase.create({ name, volume, buyer }));
+            await this.purchase.save(this.purchase.create({ name, volume, buyer: user }));
             return { ok: true };
         }
         catch (error) {

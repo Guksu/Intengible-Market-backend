@@ -12,6 +12,7 @@ const output_dto_1 = require("../../common/dto/output.dto");
 const purchaseProduct_entity_1 = require("../entitiy/purchaseProduct.entity");
 let PurchaseProductInput = class PurchaseProductInput extends (0, graphql_1.OmitType)(purchaseProduct_entity_1.PurchaseProduct, [
     'purchaseProductNo',
+    'buyer',
 ]) {
 };
 PurchaseProductInput = __decorate([

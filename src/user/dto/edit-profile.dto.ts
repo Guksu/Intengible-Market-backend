@@ -11,10 +11,7 @@ import { User } from '../entitiy/user.entity';
 @InputType()
 export class EditProfileInput extends PartialType(
   PickType(User, ['id', 'password']),
-) {
-  @Field((type) => Number)
-  userNo: number;
-}
+) {}
 
 @ObjectType()
 export class EditProfileOutput extends CommonOutPut {}

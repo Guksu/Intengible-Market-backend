@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/user/entitiy/user.entity';
 import { Like, Repository } from 'typeorm';
 import {
   PurchaseProductInput,
@@ -25,26 +26,19 @@ export class ProductService {
     private readonly purchase: Repository<PurchaseProduct>,
   ) {}
 
-  async registerProduct({
-    name,
-    price,
-    description,
-    volume,
-    seller,
-  }: RegisterProductInput): Promise<RegisterProductOutput> {
+  async registerProduct(
+    user: User,
+    registerProductInput: RegisterProductInput,
+  ): Promise<RegisterProductOutput> {
     try {
-      const exists = await this.product.findOne({ name });
+      const exists = await this.product.findOne(registerProductInput.name);
       if (exists) {
         return { ok: false, error: 'Product name is already exist.' };
       }
 
-      const newProduct = this.product.create({
-        name,
-        price,
-        description,
-        volume,
-        seller,
-      });
+      const newProduct = this.product.create(registerProductInput);
+      newProduct.nowVolume = newProduct.volume;
+      newProduct.seller = user;
 
       await this.product.save(newProduct);
       return { ok: true };
@@ -53,11 +47,10 @@ export class ProductService {
     }
   }
 
-  async purchaseProduct({
-    name,
-    volume,
-    buyer,
-  }: PurchaseProductInput): Promise<PurchaseProductOutput> {
+  async purchaseProduct(
+    user: User,
+    { name, volume }: PurchaseProductInput,
+  ): Promise<PurchaseProductOutput> {
     try {
       const checkProduct = await this.product.findOne({ name });
       if (checkProduct.nowVolume === 0) {
@@ -67,7 +60,9 @@ export class ProductService {
         await this.product.save(checkProduct);
       }
 
-      await this.purchase.save(this.purchase.create({ name, volume, buyer }));
+      await this.purchase.save(
+        this.purchase.create({ name, volume, buyer: user }),
+      );
       return { ok: true };
     } catch (error) {
       return { ok: false, error: error };

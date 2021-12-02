@@ -5,6 +5,7 @@ import { PurchaseProduct } from '../entitiy/purchaseProduct.entity';
 @InputType()
 export class PurchaseProductInput extends OmitType(PurchaseProduct, [
   'purchaseProductNo',
+  'buyer',
 ]) {}
 
 @ObjectType()

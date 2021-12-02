@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Product = void 0;
 const graphql_1 = require("@nestjs/graphql");
+const user_entity_1 = require("../../user/entitiy/user.entity");
 const typeorm_1 = require("typeorm");
 let Product = class Product {
 };
@@ -50,9 +51,9 @@ __decorate([
     __metadata("design:type", Number)
 ], Product.prototype, "nowVolume", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    (0, graphql_1.Field)((type) => Number),
-    __metadata("design:type", Number)
+    (0, graphql_1.Field)((type) => user_entity_1.User),
+    (0, typeorm_1.ManyToOne)((type) => user_entity_1.User, (User) => User.product, { cascade: true }),
+    __metadata("design:type", user_entity_1.User)
 ], Product.prototype, "seller", void 0);
 Product = __decorate([
     (0, graphql_1.InputType)('ProductInputType', { isAbstract: true }),

@@ -6,9 +6,12 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Product } from 'src/product/entitiy/product.entity';
+import { PurchaseProduct } from 'src/product/entitiy/purchaseProduct.entity';
 
 @InputType('UserInputType', { isAbstract: true })
 @ObjectType()
@@ -27,6 +30,17 @@ export class User {
   @Field((type) => String)
   @IsString()
   password: string;
+
+  @Field((type) => [Product], { nullable: true })
+  @OneToMany((type) => Product, (Product) => Product.seller)
+  product: [Product];
+
+  @Field((type) => [PurchaseProduct], { nullable: true })
+  @OneToMany(
+    (type) => PurchaseProduct,
+    (PurchaseProduct) => PurchaseProduct.buyer,
+  )
+  PurchaseProduct: [PurchaseProduct];
 
   @BeforeInsert()
   @BeforeUpdate()

@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entitiy/user.entity';
+import { GqlAuthGuard } from './gql.authGuard';
 import { JwtStrategy } from './jwt.strategy';
 import { UserResolver } from './user.resolver';
 import { UserService } from './user.service';
@@ -19,7 +20,7 @@ require('dotenv').config();
     }),
     TypeOrmModule.forFeature([User]),
   ],
-  providers: [UserResolver, UserService, JwtStrategy],
-  exports: [UserService, JwtStrategy],
+  providers: [UserResolver, UserService, JwtStrategy, GqlAuthGuard],
+  exports: [UserService, JwtStrategy, GqlAuthGuard],
 })
 export class UserModule {}

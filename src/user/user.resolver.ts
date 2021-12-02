@@ -8,6 +8,8 @@ import { DeleteUserInput, DeleteUserOutput } from './dto/delete-user.dto';
 import { EditProfileInput, EditProfileOutput } from './dto/edit-profile.dto';
 import { LoginInput, LoginOutPut } from './dto/login.dto';
 import { UserProfileInput, UserProfileOutput } from './dto/userProfile.dto';
+import { User } from './entitiy/user.entity';
+import { GetUser } from './get.user.decorator';
 import { GqlAuthGuard } from './gql.authGuard';
 import { UserService } from './user.service';
 
@@ -36,14 +38,20 @@ export class UserResolver {
   }
 
   @Mutation((type) => EditProfileOutput)
+  @UseGuards(GqlAuthGuard)
   async editProfile(
+    @GetUser() user: User,
     @Args('input') editProfileInput: EditProfileInput,
   ): Promise<EditProfileOutput> {
-    return this.userService.editProfile(editProfileInput);
+    return this.userService.editProfile(user, editProfileInput);
   }
 
   @Mutation((type) => DeleteUserOutput)
-  async deleteUser(@Args('Input') delteUserInput: DeleteUserInput) {
-    return this.userService.deleteUser(delteUserInput);
+  @UseGuards(GqlAuthGuard)
+  async deleteUser(
+    @GetUser() user: User,
+    @Args('Input') delteUserInput: DeleteUserInput,
+  ) {
+    return this.userService.deleteUser(user, delteUserInput);
   }
 }

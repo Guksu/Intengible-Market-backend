@@ -13,7 +13,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductResolver = void 0;
+const common_1 = require("@nestjs/common");
 const graphql_1 = require("@nestjs/graphql");
+const user_entity_1 = require("../user/entitiy/user.entity");
+const get_user_decorator_1 = require("../user/get.user.decorator");
+const gql_authGuard_1 = require("../user/gql.authGuard");
 const purchaseProduct_dto_1 = require("./dto/purchaseProduct.dto");
 const registerProduct_dto_1 = require("./dto/registerProduct.dto");
 const searchProduct_dto_1 = require("./dto/searchProduct.dto");
@@ -22,11 +26,11 @@ let ProductResolver = class ProductResolver {
     constructor(productService) {
         this.productService = productService;
     }
-    async registerProduct(registerProductInput) {
-        return this.productService.registerProduct(registerProductInput);
+    async registerProduct(user, registerProductInput) {
+        return this.productService.registerProduct(user, registerProductInput);
     }
-    async purchaseProduct(purchaseProductInput) {
-        return this.productService.purchaseProduct(purchaseProductInput);
+    async purchaseProduct(user, purchaseProductInput) {
+        return this.productService.purchaseProduct(user, purchaseProductInput);
     }
     async searchProduct(searchProductInput) {
         return this.productService.searchProduct(searchProductInput);
@@ -34,16 +38,22 @@ let ProductResolver = class ProductResolver {
 };
 __decorate([
     (0, graphql_1.Mutation)((type) => registerProduct_dto_1.RegisterProductOutput),
-    __param(0, (0, graphql_1.Args)('input')),
+    (0, common_1.UseGuards)(gql_authGuard_1.GqlAuthGuard),
+    __param(0, (0, get_user_decorator_1.GetUser)()),
+    __param(1, (0, graphql_1.Args)('input')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [registerProduct_dto_1.RegisterProductInput]),
+    __metadata("design:paramtypes", [user_entity_1.User,
+        registerProduct_dto_1.RegisterProductInput]),
     __metadata("design:returntype", Promise)
 ], ProductResolver.prototype, "registerProduct", null);
 __decorate([
     (0, graphql_1.Mutation)((type) => purchaseProduct_dto_1.PurchaseProductOutput),
-    __param(0, (0, graphql_1.Args)('input')),
+    (0, common_1.UseGuards)(gql_authGuard_1.GqlAuthGuard),
+    __param(0, (0, get_user_decorator_1.GetUser)()),
+    __param(1, (0, graphql_1.Args)('input')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [purchaseProduct_dto_1.PurchaseProductInput]),
+    __metadata("design:paramtypes", [user_entity_1.User,
+        purchaseProduct_dto_1.PurchaseProductInput]),
     __metadata("design:returntype", Promise)
 ], ProductResolver.prototype, "purchaseProduct", null);
 __decorate([
