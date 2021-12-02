@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Repository } from 'typeorm';
-import { User } from './entitiy/user.entity';
+import { User } from '../user/entitiy/user.entity';
 require('dotenv').config();
 
 @Injectable()

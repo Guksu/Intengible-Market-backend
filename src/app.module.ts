@@ -9,6 +9,7 @@ import { PurchaseProduct } from './product/entitiy/purchaseProduct.entity';
 import { BoardModule } from './board/board.module';
 import { RequestBoard } from './board/entity/request.entity';
 import { ReviewBoard } from './board/entity/review.entity';
+import { AuthModule } from './auth/auth.module';
 require('dotenv').config();
 
 @Module({
@@ -28,7 +29,8 @@ require('dotenv').config();
       context: ({ req, connection }) => {
         if (req) {
           const user = req.headers.authorization;
-          return { ...req, user };
+          // return { ...req, user };
+          return user['user'];
         } else {
           return connection;
         }
@@ -37,6 +39,7 @@ require('dotenv').config();
     UserModule,
     ProductModule,
     BoardModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

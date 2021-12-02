@@ -18,6 +18,7 @@ const purchaseProduct_entity_1 = require("./product/entitiy/purchaseProduct.enti
 const board_module_1 = require("./board/board.module");
 const request_entity_1 = require("./board/entity/request.entity");
 const review_entity_1 = require("./board/entity/review.entity");
+const auth_module_1 = require("./auth/auth.module");
 require('dotenv').config();
 let AppModule = class AppModule {
 };
@@ -39,7 +40,7 @@ AppModule = __decorate([
                 context: ({ req, connection }) => {
                     if (req) {
                         const user = req.headers.authorization;
-                        return Object.assign(Object.assign({}, req), { user });
+                        return user['user'];
                     }
                     else {
                         return connection;
@@ -49,6 +50,7 @@ AppModule = __decorate([
             user_module_1.UserModule,
             product_module_1.ProductModule,
             board_module_1.BoardModule,
+            auth_module_1.AuthModule,
         ],
         controllers: [],
         providers: [],

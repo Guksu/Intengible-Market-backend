@@ -15,9 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductResolver = void 0;
 const common_1 = require("@nestjs/common");
 const graphql_1 = require("@nestjs/graphql");
+const auth_guard_1 = require("../auth/auth.guard");
+const auth_user_decorator_1 = require("../auth/auth.user-decorator");
 const user_entity_1 = require("../user/entitiy/user.entity");
-const get_user_decorator_1 = require("../user/get.user.decorator");
-const gql_authGuard_1 = require("../user/gql.authGuard");
 const purchaseProduct_dto_1 = require("./dto/purchaseProduct.dto");
 const registerProduct_dto_1 = require("./dto/registerProduct.dto");
 const searchProduct_dto_1 = require("./dto/searchProduct.dto");
@@ -38,8 +38,8 @@ let ProductResolver = class ProductResolver {
 };
 __decorate([
     (0, graphql_1.Mutation)((type) => registerProduct_dto_1.RegisterProductOutput),
-    (0, common_1.UseGuards)(gql_authGuard_1.GqlAuthGuard),
-    __param(0, (0, get_user_decorator_1.GetUser)()),
+    (0, common_1.UseGuards)(auth_guard_1.GqlAuthGuard),
+    __param(0, (0, auth_user_decorator_1.GetUser)()),
     __param(1, (0, graphql_1.Args)('input')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.User,
@@ -48,8 +48,8 @@ __decorate([
 ], ProductResolver.prototype, "registerProduct", null);
 __decorate([
     (0, graphql_1.Mutation)((type) => purchaseProduct_dto_1.PurchaseProductOutput),
-    (0, common_1.UseGuards)(gql_authGuard_1.GqlAuthGuard),
-    __param(0, (0, get_user_decorator_1.GetUser)()),
+    (0, common_1.UseGuards)(auth_guard_1.GqlAuthGuard),
+    __param(0, (0, auth_user_decorator_1.GetUser)()),
     __param(1, (0, graphql_1.Args)('input')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.User,

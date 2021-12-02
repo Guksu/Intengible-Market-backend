@@ -38,7 +38,7 @@ export class ProductService {
 
       const newProduct = this.product.create(registerProductInput);
       newProduct.nowVolume = newProduct.volume;
-      newProduct.seller = user;
+      newProduct.seller = user['user'];
 
       await this.product.save(newProduct);
       return { ok: true };
@@ -61,7 +61,7 @@ export class ProductService {
       }
 
       await this.purchase.save(
-        this.purchase.create({ name, volume, buyer: user }),
+        this.purchase.create({ name, volume, buyer: user['user'] }),
       );
       return { ok: true };
     } catch (error) {

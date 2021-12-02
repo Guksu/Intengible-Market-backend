@@ -1,8 +1,8 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { GqlAuthGuard } from 'src/auth/auth.guard';
+import { GetUser } from 'src/auth/auth.user-decorator';
 import { User } from 'src/user/entitiy/user.entity';
-import { GetUser } from 'src/user/get.user.decorator';
-import { GqlAuthGuard } from 'src/user/gql.authGuard';
 import {
   PurchaseProductInput,
   PurchaseProductOutput,

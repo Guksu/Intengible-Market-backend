@@ -32,7 +32,7 @@ let ProductService = class ProductService {
             }
             const newProduct = this.product.create(registerProductInput);
             newProduct.nowVolume = newProduct.volume;
-            newProduct.seller = user;
+            newProduct.seller = user['user'];
             await this.product.save(newProduct);
             return { ok: true };
         }
@@ -50,7 +50,7 @@ let ProductService = class ProductService {
                 checkProduct.nowVolume -= volume;
                 await this.product.save(checkProduct);
             }
-            await this.purchase.save(this.purchase.create({ name, volume, buyer: user }));
+            await this.purchase.save(this.purchase.create({ name, volume, buyer: user['user'] }));
             return { ok: true };
         }
         catch (error) {

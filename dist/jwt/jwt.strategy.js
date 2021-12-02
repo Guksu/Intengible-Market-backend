@@ -18,7 +18,7 @@ const passport_1 = require("@nestjs/passport");
 const typeorm_1 = require("@nestjs/typeorm");
 const passport_jwt_1 = require("passport-jwt");
 const typeorm_2 = require("typeorm");
-const user_entity_1 = require("../user/entitiy/user.entity");
+const user_entity_1 = require("./entitiy/user.entity");
 require('dotenv').config();
 let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy) {
     constructor(user) {

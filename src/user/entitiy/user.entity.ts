@@ -32,13 +32,16 @@ export class User {
   password: string;
 
   @Field((type) => [Product], { nullable: true })
-  @OneToMany((type) => Product, (Product) => Product.seller)
+  @OneToMany((type) => Product, (Product) => Product.seller, {
+    onDelete: 'CASCADE',
+  })
   product: [Product];
 
-  @Field((type) => [PurchaseProduct], { nullable: true })
+  @Field((type) => [PurchaseProduct])
   @OneToMany(
     (type) => PurchaseProduct,
     (PurchaseProduct) => PurchaseProduct.buyer,
+    { onDelete: 'CASCADE' },
   )
   PurchaseProduct: [PurchaseProduct];
 

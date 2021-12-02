@@ -58,12 +58,14 @@ __decorate([
 ], User.prototype, "password", void 0);
 __decorate([
     (0, graphql_1.Field)((type) => [product_entity_1.Product], { nullable: true }),
-    (0, typeorm_1.OneToMany)((type) => product_entity_1.Product, (Product) => Product.seller),
+    (0, typeorm_1.OneToMany)((type) => product_entity_1.Product, (Product) => Product.seller, {
+        onDelete: 'CASCADE',
+    }),
     __metadata("design:type", Array)
 ], User.prototype, "product", void 0);
 __decorate([
-    (0, graphql_1.Field)((type) => [purchaseProduct_entity_1.PurchaseProduct], { nullable: true }),
-    (0, typeorm_1.OneToMany)((type) => purchaseProduct_entity_1.PurchaseProduct, (PurchaseProduct) => PurchaseProduct.buyer),
+    (0, graphql_1.Field)((type) => [purchaseProduct_entity_1.PurchaseProduct]),
+    (0, typeorm_1.OneToMany)((type) => purchaseProduct_entity_1.PurchaseProduct, (PurchaseProduct) => PurchaseProduct.buyer, { onDelete: 'CASCADE' }),
     __metadata("design:type", Array)
 ], User.prototype, "PurchaseProduct", void 0);
 __decorate([
