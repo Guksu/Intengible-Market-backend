@@ -39,7 +39,6 @@ export class ProductService {
       const newProduct = this.product.create(registerProductInput);
       newProduct.nowVolume = newProduct.volume;
       newProduct.seller = user['user'];
-
       await this.product.save(newProduct);
       return { ok: true };
     } catch (error) {
