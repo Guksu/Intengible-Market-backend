@@ -40,7 +40,6 @@ AppModule = __decorate([
                 context: ({ req, connection }) => {
                     if (req) {
                         const user = req.headers.authorization;
-                        console.log(req);
                         return Object.assign(Object.assign({}, req), { user });
                     }
                     else {

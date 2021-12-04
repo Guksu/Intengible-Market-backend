@@ -29,7 +29,6 @@ require('dotenv').config();
       context: ({ req, connection }) => {
         if (req) {
           const user = req.headers.authorization;
-          console.log(req);
           return { ...req, user };
         } else {
           return connection;
