@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PurchaseProductOutput } from 'src/product/dto/purchaseProduct.dto';
 import { Product } from 'src/product/entitiy/product.entity';
 import { PurchaseProduct } from 'src/product/entitiy/purchaseProduct.entity';
 import { Repository } from 'typeorm';
@@ -9,7 +8,6 @@ import {
   CreateAccountInput,
   CreateAccountOutput,
 } from './dto/create-account.dto';
-import { DeleteUserInput, DeleteUserOutput } from './dto/delete-user.dto';
 import { EditProfileInput, EditProfileOutput } from './dto/edit-profile.dto';
 import { LoginInput, LoginOutPut } from './dto/login.dto';
 import { ProductListOutput } from './dto/productList.dto';
@@ -117,33 +115,6 @@ export class UserService {
       return { ok: true };
     } catch (error) {
       return { ok: false, error: "Can't edit your profile. Try again" };
-    }
-  }
-
-  async deleteUser(
-    user: User,
-    { id, password }: DeleteUserInput,
-  ): Promise<DeleteUserOutput> {
-    try {
-      const delteCheckUser = await this.user.findOne(user['user'].userNo);
-      const deleteCheckPassword = await delteCheckUser.checkPassword(password);
-
-      if (id != delteCheckUser.id) {
-        return { ok: false, error: 'Check again' };
-      }
-
-      if (!deleteCheckPassword) {
-        return { ok: false, error: "Check again you'r Password" };
-      }
-
-      await this.user.delete(delteCheckUser);
-
-      return { ok: true };
-    } catch (error) {
-      return {
-        ok: false,
-        error: error,
-      };
     }
   }
 }

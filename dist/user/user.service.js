@@ -16,7 +16,6 @@ exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const typeorm_1 = require("@nestjs/typeorm");
-const purchaseProduct_dto_1 = require("../product/dto/purchaseProduct.dto");
 const product_entity_1 = require("../product/entitiy/product.entity");
 const purchaseProduct_entity_1 = require("../product/entitiy/purchaseProduct.entity");
 const typeorm_2 = require("typeorm");
@@ -101,26 +100,6 @@ let UserService = class UserService {
         }
         catch (error) {
             return { ok: false, error: "Can't edit your profile. Try again" };
-        }
-    }
-    async deleteUser(user, { id, password }) {
-        try {
-            const delteCheckUser = await this.user.findOne(user['user'].userNo);
-            const deleteCheckPassword = await delteCheckUser.checkPassword(password);
-            if (id != delteCheckUser.id) {
-                return { ok: false, error: 'Check again' };
-            }
-            if (!deleteCheckPassword) {
-                return { ok: false, error: "Check again you'r Password" };
-            }
-            await this.user.delete(delteCheckUser);
-            return { ok: true };
-        }
-        catch (error) {
-            return {
-                ok: false,
-                error: error,
-            };
         }
     }
 };

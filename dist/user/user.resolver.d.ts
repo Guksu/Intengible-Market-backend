@@ -1,5 +1,4 @@
 import { CreateAccountInput, CreateAccountOutput } from './dto/create-account.dto';
-import { DeleteUserInput, DeleteUserOutput } from './dto/delete-user.dto';
 import { EditProfileInput, EditProfileOutput } from './dto/edit-profile.dto';
 import { LoginInput, LoginOutPut } from './dto/login.dto';
 import { ProductListOutput } from './dto/productList.dto';
@@ -14,5 +13,4 @@ export declare class UserResolver {
     userProductList(user: User): Promise<ProductListOutput>;
     userPurchaseProductList(user: User): Promise<PurchaseProductListOutput>;
     editProfile(user: User, editProfileInput: EditProfileInput): Promise<EditProfileOutput>;
-    deleteUser(user: User, delteUserInput: DeleteUserInput): Promise<DeleteUserOutput>;
 }

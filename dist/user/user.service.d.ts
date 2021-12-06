@@ -3,7 +3,6 @@ import { Product } from 'src/product/entitiy/product.entity';
 import { PurchaseProduct } from 'src/product/entitiy/purchaseProduct.entity';
 import { Repository } from 'typeorm';
 import { CreateAccountInput, CreateAccountOutput } from './dto/create-account.dto';
-import { DeleteUserInput, DeleteUserOutput } from './dto/delete-user.dto';
 import { EditProfileInput, EditProfileOutput } from './dto/edit-profile.dto';
 import { LoginInput, LoginOutPut } from './dto/login.dto';
 import { ProductListOutput } from './dto/productList.dto';
@@ -20,5 +19,4 @@ export declare class UserService {
     userProductList(user: User): Promise<ProductListOutput>;
     userPurchaseProductList(user: User): Promise<PurchaseProductListOutput>;
     editProfile(user: User, { newPassword }: EditProfileInput): Promise<EditProfileOutput>;
-    deleteUser(user: User, { id, password }: DeleteUserInput): Promise<DeleteUserOutput>;
 }

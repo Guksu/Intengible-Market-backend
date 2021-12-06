@@ -18,7 +18,6 @@ const graphql_1 = require("@nestjs/graphql");
 const auth_guard_1 = require("../auth/auth.guard");
 const auth_user_decorator_1 = require("../auth/auth.user-decorator");
 const create_account_dto_1 = require("./dto/create-account.dto");
-const delete_user_dto_1 = require("./dto/delete-user.dto");
 const edit_profile_dto_1 = require("./dto/edit-profile.dto");
 const login_dto_1 = require("./dto/login.dto");
 const productList_dto_1 = require("./dto/productList.dto");
@@ -43,9 +42,6 @@ let UserResolver = class UserResolver {
     }
     async editProfile(user, editProfileInput) {
         return this.userService.editProfile(user, editProfileInput);
-    }
-    async deleteUser(user, delteUserInput) {
-        return this.userService.deleteUser(user, delteUserInput);
     }
 };
 __decorate([
@@ -88,16 +84,6 @@ __decorate([
         edit_profile_dto_1.EditProfileInput]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "editProfile", null);
-__decorate([
-    (0, graphql_1.Mutation)((type) => delete_user_dto_1.DeleteUserOutput),
-    (0, common_1.UseGuards)(auth_guard_1.GqlAuthGuard),
-    __param(0, (0, auth_user_decorator_1.GetUser)()),
-    __param(1, (0, graphql_1.Args)('Input')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [user_entity_1.User,
-        delete_user_dto_1.DeleteUserInput]),
-    __metadata("design:returntype", Promise)
-], UserResolver.prototype, "deleteUser", null);
 UserResolver = __decorate([
     (0, graphql_1.Resolver)(),
     __metadata("design:paramtypes", [user_service_1.UserService])
