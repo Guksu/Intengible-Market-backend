@@ -16,6 +16,7 @@ exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const typeorm_1 = require("@nestjs/typeorm");
+const purchaseProduct_dto_1 = require("../product/dto/purchaseProduct.dto");
 const product_entity_1 = require("../product/entitiy/product.entity");
 const purchaseProduct_entity_1 = require("../product/entitiy/purchaseProduct.entity");
 const typeorm_2 = require("typeorm");
@@ -72,7 +73,21 @@ let UserService = class UserService {
             };
         }
         catch (error) {
-            return { ok: false, error: 'Profile is somthing wrong' };
+            return { ok: false, error: 'ProductList Error' };
+        }
+    }
+    async userPurchaseProductList(user) {
+        try {
+            const checkProduct = await this.purchaseProduct.find({
+                buyer: user['user'],
+            });
+            return {
+                ok: true,
+                purchaseProduct: checkProduct,
+            };
+        }
+        catch (error) {
+            return { ok: false, error: 'PurchaseProductList Error' };
         }
     }
     async editProfile(user, { newPassword }) {

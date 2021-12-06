@@ -6,7 +6,8 @@ import { CreateAccountInput, CreateAccountOutput } from './dto/create-account.dt
 import { DeleteUserInput, DeleteUserOutput } from './dto/delete-user.dto';
 import { EditProfileInput, EditProfileOutput } from './dto/edit-profile.dto';
 import { LoginInput, LoginOutPut } from './dto/login.dto';
-import { ProductListOutput } from './dto/productList';
+import { ProductListOutput } from './dto/productList.dto';
+import { PurchaseProductListOutput } from './dto/purchaseProductList.dto';
 import { User } from './entitiy/user.entity';
 export declare class UserService {
     private readonly user;
@@ -17,6 +18,7 @@ export declare class UserService {
     craateAccount({ id, password, }: CreateAccountInput): Promise<CreateAccountOutput>;
     login({ id, password }: LoginInput): Promise<LoginOutPut>;
     userProductList(user: User): Promise<ProductListOutput>;
+    userPurchaseProductList(user: User): Promise<PurchaseProductListOutput>;
     editProfile(user: User, { newPassword }: EditProfileInput): Promise<EditProfileOutput>;
     deleteUser(user: User, { id, password }: DeleteUserInput): Promise<DeleteUserOutput>;
 }

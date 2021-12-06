@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PurchaseProductOutput } from 'src/product/dto/purchaseProduct.dto';
 import { Product } from 'src/product/entitiy/product.entity';
 import { PurchaseProduct } from 'src/product/entitiy/purchaseProduct.entity';
 import { Repository } from 'typeorm';
@@ -11,7 +12,8 @@ import {
 import { DeleteUserInput, DeleteUserOutput } from './dto/delete-user.dto';
 import { EditProfileInput, EditProfileOutput } from './dto/edit-profile.dto';
 import { LoginInput, LoginOutPut } from './dto/login.dto';
-import { ProductListOutput } from './dto/productList';
+import { ProductListOutput } from './dto/productList.dto';
+import { PurchaseProductListOutput } from './dto/purchaseProductList.dto';
 import { User } from './entitiy/user.entity';
 
 @Injectable()
@@ -81,7 +83,23 @@ export class UserService {
         product: checkProduct,
       };
     } catch (error) {
-      return { ok: false, error: 'Profile is somthing wrong' };
+      return { ok: false, error: 'ProductList Error' };
+    }
+  }
+
+  async userPurchaseProductList(
+    user: User,
+  ): Promise<PurchaseProductListOutput> {
+    try {
+      const checkProduct = await this.purchaseProduct.find({
+        buyer: user['user'],
+      });
+      return {
+        ok: true,
+        purchaseProduct: checkProduct,
+      };
+    } catch (error) {
+      return { ok: false, error: 'PurchaseProductList Error' };
     }
   }
 

@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, InputType, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/auth.guard';
 import { GetUser } from 'src/auth/auth.user-decorator';
 import {
@@ -9,7 +9,8 @@ import {
 import { DeleteUserInput, DeleteUserOutput } from './dto/delete-user.dto';
 import { EditProfileInput, EditProfileOutput } from './dto/edit-profile.dto';
 import { LoginInput, LoginOutPut } from './dto/login.dto';
-import { ProductListOutput } from './dto/productList';
+import { ProductListOutput } from './dto/productList.dto';
+import { PurchaseProductListOutput } from './dto/purchaseProductList.dto';
 import { User } from './entitiy/user.entity';
 import { UserService } from './user.service';
 
@@ -36,6 +37,15 @@ export class UserResolver {
     user: User,
   ): Promise<ProductListOutput> {
     return this.userService.userProductList(user);
+  }
+
+  @Query((type) => PurchaseProductListOutput)
+  @UseGuards(GqlAuthGuard)
+  async userPurchaseProductList(
+    @GetUser()
+    user: User,
+  ): Promise<PurchaseProductListOutput> {
+    return this.userService.userPurchaseProductList(user);
   }
 
   @Mutation((type) => EditProfileOutput)
