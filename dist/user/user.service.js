@@ -57,23 +57,19 @@ let UserService = class UserService {
             };
         }
     }
-    async userProfile({ id }) {
+    async userProfile(user) {
         try {
-            const user = await this.user.findOneOrFail({ id });
-            return { ok: true, user };
+            return { ok: true };
         }
         catch (error) {
             return { ok: false, error: 'Profile is somthing wrong' };
         }
     }
-    async editProfile(user, { id, password }) {
+    async editProfile(user, { newPassword }) {
         try {
-            const checkUser = await this.user.findOne(user.userNo);
-            if (id) {
-                checkUser.id = id;
-            }
-            if (password) {
-                user.password = password;
+            const checkUser = await this.user.findOne(user['user'].userNo);
+            if (checkUser) {
+                checkUser.password = newPassword;
             }
             await this.user.save(checkUser);
             return { ok: true };
@@ -84,7 +80,7 @@ let UserService = class UserService {
     }
     async deleteUser(user, { id, password }) {
         try {
-            const delteCheckUser = await this.user.findOne(user.userNo);
+            const delteCheckUser = await this.user.findOne(user['user'].userNo);
             const deleteCheckPassword = await delteCheckUser.checkPassword(password);
             if (id != delteCheckUser.id) {
                 return { ok: false, error: 'Check again' };

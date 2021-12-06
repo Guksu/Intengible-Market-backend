@@ -34,8 +34,8 @@ let UserResolver = class UserResolver {
     async login(loginInput) {
         return this.userService.login(loginInput);
     }
-    async userProfile(userProfileInput) {
-        return this.userService.userProfile(userProfileInput);
+    async userProfile(user) {
+        return this.userService.userProfile(user);
     }
     async editProfile(user, editProfileInput) {
         return this.userService.editProfile(user, editProfileInput);
@@ -61,9 +61,9 @@ __decorate([
 __decorate([
     (0, graphql_1.Query)((type) => userProfile_dto_1.UserProfileOutput),
     (0, common_1.UseGuards)(auth_guard_1.GqlAuthGuard),
-    __param(0, (0, graphql_1.Args)('input')),
+    __param(0, (0, auth_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [userProfile_dto_1.UserProfileInput]),
+    __metadata("design:paramtypes", [user_entity_1.User]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "userProfile", null);
 __decorate([

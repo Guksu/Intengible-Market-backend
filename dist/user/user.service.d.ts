@@ -4,7 +4,7 @@ import { CreateAccountInput, CreateAccountOutput } from './dto/create-account.dt
 import { DeleteUserInput, DeleteUserOutput } from './dto/delete-user.dto';
 import { EditProfileInput, EditProfileOutput } from './dto/edit-profile.dto';
 import { LoginInput, LoginOutPut } from './dto/login.dto';
-import { UserProfileInput, UserProfileOutput } from './dto/userProfile.dto';
+import { UserProfileOutput } from './dto/userProfile.dto';
 import { User } from './entitiy/user.entity';
 export declare class UserService {
     private readonly user;
@@ -12,7 +12,7 @@ export declare class UserService {
     constructor(user: Repository<User>, jwtService: JwtService);
     craateAccount({ id, password, }: CreateAccountInput): Promise<CreateAccountOutput>;
     login({ id, password }: LoginInput): Promise<LoginOutPut>;
-    userProfile({ id }: UserProfileInput): Promise<UserProfileOutput>;
-    editProfile(user: User, { id, password }: EditProfileInput): Promise<EditProfileOutput>;
+    userProfile(user: User): Promise<UserProfileOutput>;
+    editProfile(user: User, { newPassword }: EditProfileInput): Promise<EditProfileOutput>;
     deleteUser(user: User, { id, password }: DeleteUserInput): Promise<DeleteUserOutput>;
 }

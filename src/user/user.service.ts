@@ -9,7 +9,7 @@ import {
 import { DeleteUserInput, DeleteUserOutput } from './dto/delete-user.dto';
 import { EditProfileInput, EditProfileOutput } from './dto/edit-profile.dto';
 import { LoginInput, LoginOutPut } from './dto/login.dto';
-import { UserProfileInput, UserProfileOutput } from './dto/userProfile.dto';
+import { UserProfileOutput } from './dto/userProfile.dto';
 import { User } from './entitiy/user.entity';
 
 @Injectable()
@@ -65,10 +65,9 @@ export class UserService {
     }
   }
 
-  async userProfile({ id }: UserProfileInput): Promise<UserProfileOutput> {
+  async userProfile(user: User): Promise<UserProfileOutput> {
     try {
-      const user = await this.user.findOneOrFail({ id });
-      return { ok: true, user };
+      return { ok: true };
     } catch (error) {
       return { ok: false, error: 'Profile is somthing wrong' };
     }
@@ -76,17 +75,12 @@ export class UserService {
 
   async editProfile(
     user: User,
-    { id, password }: EditProfileInput,
+    { newPassword }: EditProfileInput,
   ): Promise<EditProfileOutput> {
     try {
-      const checkUser = await this.user.findOne(user.userNo);
-
-      if (id) {
-        checkUser.id = id;
-      }
-
-      if (password) {
-        user.password = password;
+      const checkUser = await this.user.findOne(user['user'].userNo);
+      if (checkUser) {
+        checkUser.password = newPassword;
       }
 
       await this.user.save(checkUser);
@@ -101,7 +95,7 @@ export class UserService {
     { id, password }: DeleteUserInput,
   ): Promise<DeleteUserOutput> {
     try {
-      const delteCheckUser = await this.user.findOne(user.userNo);
+      const delteCheckUser = await this.user.findOne(user['user'].userNo);
       const deleteCheckPassword = await delteCheckUser.checkPassword(password);
 
       if (id != delteCheckUser.id) {
