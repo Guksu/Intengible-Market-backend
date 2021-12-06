@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Product } from 'src/product/entitiy/product.entity';
+import { PurchaseProduct } from 'src/product/entitiy/purchaseProduct.entity';
 import { Repository } from 'typeorm';
 import {
   CreateAccountInput,
@@ -9,7 +11,7 @@ import {
 import { DeleteUserInput, DeleteUserOutput } from './dto/delete-user.dto';
 import { EditProfileInput, EditProfileOutput } from './dto/edit-profile.dto';
 import { LoginInput, LoginOutPut } from './dto/login.dto';
-import { UserProfileOutput } from './dto/userProfile.dto';
+import { ProductListOutput } from './dto/productList';
 import { User } from './entitiy/user.entity';
 
 @Injectable()
@@ -18,6 +20,10 @@ export class UserService {
     @InjectRepository(User)
     private readonly user: Repository<User>,
     private readonly jwtService: JwtService,
+    @InjectRepository(Product)
+    private readonly product: Repository<Product>,
+    @InjectRepository(PurchaseProduct)
+    private readonly purchaseProduct: Repository<PurchaseProduct>,
   ) {}
 
   async craateAccount({
@@ -65,9 +71,15 @@ export class UserService {
     }
   }
 
-  async userProfile(user: User): Promise<UserProfileOutput> {
+  async userProductList(user: User): Promise<ProductListOutput> {
     try {
-      return { ok: true };
+      const checkProduct = await this.product.find({
+        seller: user['user'],
+      });
+      return {
+        ok: true,
+        product: checkProduct,
+      };
     } catch (error) {
       return { ok: false, error: 'Profile is somthing wrong' };
     }

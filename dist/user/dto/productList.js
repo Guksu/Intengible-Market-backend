@@ -9,18 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserProfileOutput = void 0;
+exports.ProductListOutput = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const output_dto_1 = require("../../common/dto/output.dto");
-const user_entity_1 = require("../entitiy/user.entity");
-let UserProfileOutput = class UserProfileOutput extends output_dto_1.CommonOutPut {
+const product_entity_1 = require("../../product/entitiy/product.entity");
+let ProductListOutput = class ProductListOutput extends output_dto_1.CommonOutPut {
 };
 __decorate([
-    (0, graphql_1.Field)(type => user_entity_1.User),
-    __metadata("design:type", Object)
-], UserProfileOutput.prototype, "", void 0);
-UserProfileOutput = __decorate([
+    (0, graphql_1.Field)((type) => [product_entity_1.Product], { nullable: true }),
+    __metadata("design:type", Array)
+], ProductListOutput.prototype, "product", void 0);
+ProductListOutput = __decorate([
     (0, graphql_1.ObjectType)()
-], UserProfileOutput);
-exports.UserProfileOutput = UserProfileOutput;
-//# sourceMappingURL=userProfile.dto.js.map
+], ProductListOutput);
+exports.ProductListOutput = ProductListOutput;
+//# sourceMappingURL=productList.js.map

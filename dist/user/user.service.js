@@ -16,12 +16,16 @@ exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const typeorm_1 = require("@nestjs/typeorm");
+const product_entity_1 = require("../product/entitiy/product.entity");
+const purchaseProduct_entity_1 = require("../product/entitiy/purchaseProduct.entity");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./entitiy/user.entity");
 let UserService = class UserService {
-    constructor(user, jwtService) {
+    constructor(user, jwtService, product, purchaseProduct) {
         this.user = user;
         this.jwtService = jwtService;
+        this.product = product;
+        this.purchaseProduct = purchaseProduct;
     }
     async craateAccount({ id, password, }) {
         try {
@@ -57,9 +61,15 @@ let UserService = class UserService {
             };
         }
     }
-    async userProfile(user) {
+    async userProductList(user) {
         try {
-            return { ok: true };
+            const checkProduct = await this.product.find({
+                seller: user['user'],
+            });
+            return {
+                ok: true,
+                product: checkProduct,
+            };
         }
         catch (error) {
             return { ok: false, error: 'Profile is somthing wrong' };
@@ -102,8 +112,12 @@ let UserService = class UserService {
 UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
+    __param(2, (0, typeorm_1.InjectRepository)(product_entity_1.Product)),
+    __param(3, (0, typeorm_1.InjectRepository)(purchaseProduct_entity_1.PurchaseProduct)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        jwt_1.JwtService])
+        jwt_1.JwtService,
+        typeorm_2.Repository,
+        typeorm_2.Repository])
 ], UserService);
 exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map

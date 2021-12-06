@@ -9,7 +9,7 @@ import {
 import { DeleteUserInput, DeleteUserOutput } from './dto/delete-user.dto';
 import { EditProfileInput, EditProfileOutput } from './dto/edit-profile.dto';
 import { LoginInput, LoginOutPut } from './dto/login.dto';
-import { UserProfileOutput } from './dto/userProfile.dto';
+import { ProductListOutput } from './dto/productList';
 import { User } from './entitiy/user.entity';
 import { UserService } from './user.service';
 
@@ -29,13 +29,13 @@ export class UserResolver {
     return this.userService.login(loginInput);
   }
 
-  @Query((type) => UserProfileOutput)
+  @Query((type) => ProductListOutput)
   @UseGuards(GqlAuthGuard)
-  async userProfile(
+  async userProductList(
     @GetUser()
     user: User,
-  ): Promise<UserProfileOutput> {
-    return this.userService.userProfile(user);
+  ): Promise<ProductListOutput> {
+    return this.userService.userProductList(user);
   }
 
   @Mutation((type) => EditProfileOutput)

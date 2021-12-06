@@ -21,7 +21,7 @@ const create_account_dto_1 = require("./dto/create-account.dto");
 const delete_user_dto_1 = require("./dto/delete-user.dto");
 const edit_profile_dto_1 = require("./dto/edit-profile.dto");
 const login_dto_1 = require("./dto/login.dto");
-const userProfile_dto_1 = require("./dto/userProfile.dto");
+const productList_1 = require("./dto/productList");
 const user_entity_1 = require("./entitiy/user.entity");
 const user_service_1 = require("./user.service");
 let UserResolver = class UserResolver {
@@ -34,8 +34,8 @@ let UserResolver = class UserResolver {
     async login(loginInput) {
         return this.userService.login(loginInput);
     }
-    async userProfile(user) {
-        return this.userService.userProfile(user);
+    async userProductList(user) {
+        return this.userService.userProductList(user);
     }
     async editProfile(user, editProfileInput) {
         return this.userService.editProfile(user, editProfileInput);
@@ -59,13 +59,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "login", null);
 __decorate([
-    (0, graphql_1.Query)((type) => userProfile_dto_1.UserProfileOutput),
+    (0, graphql_1.Query)((type) => productList_1.ProductListOutput),
     (0, common_1.UseGuards)(auth_guard_1.GqlAuthGuard),
     __param(0, (0, auth_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.User]),
     __metadata("design:returntype", Promise)
-], UserResolver.prototype, "userProfile", null);
+], UserResolver.prototype, "userProductList", null);
 __decorate([
     (0, graphql_1.Mutation)((type) => edit_profile_dto_1.EditProfileOutput),
     (0, common_1.UseGuards)(auth_guard_1.GqlAuthGuard),
