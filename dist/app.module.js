@@ -19,6 +19,7 @@ const board_module_1 = require("./board/board.module");
 const request_entity_1 = require("./board/entity/request.entity");
 const review_entity_1 = require("./board/entity/review.entity");
 const auth_module_1 = require("./auth/auth.module");
+const upload_module_1 = require("./upload/upload.module");
 require('dotenv').config();
 let AppModule = class AppModule {
 };
@@ -51,6 +52,7 @@ AppModule = __decorate([
             product_module_1.ProductModule,
             board_module_1.BoardModule,
             auth_module_1.AuthModule,
+            upload_module_1.UploadModule,
         ],
         controllers: [],
         providers: [],

@@ -10,6 +10,7 @@ import { BoardModule } from './board/board.module';
 import { RequestBoard } from './board/entity/request.entity';
 import { ReviewBoard } from './board/entity/review.entity';
 import { AuthModule } from './auth/auth.module';
+import { UploadModule } from './upload/upload.module';
 require('dotenv').config();
 
 @Module({
@@ -39,6 +40,7 @@ require('dotenv').config();
     ProductModule,
     BoardModule,
     AuthModule,
+    UploadModule,
   ],
   controllers: [],
   providers: [],
