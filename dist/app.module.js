@@ -15,9 +15,6 @@ const user_module_1 = require("./user/user.module");
 const product_module_1 = require("./product/product.module");
 const product_entity_1 = require("./product/entitiy/product.entity");
 const purchaseProduct_entity_1 = require("./product/entitiy/purchaseProduct.entity");
-const board_module_1 = require("./board/board.module");
-const request_entity_1 = require("./board/entity/request.entity");
-const review_entity_1 = require("./board/entity/review.entity");
 const auth_module_1 = require("./auth/auth.module");
 const upload_module_1 = require("./upload/upload.module");
 require('dotenv').config();
@@ -33,7 +30,7 @@ AppModule = __decorate([
                 username: 'root',
                 password: process.env.PASSWORD,
                 database: 'intengible-market',
-                entities: [user_entity_1.User, product_entity_1.Product, purchaseProduct_entity_1.PurchaseProduct, request_entity_1.RequestBoard, review_entity_1.ReviewBoard],
+                entities: [user_entity_1.User, product_entity_1.Product, purchaseProduct_entity_1.PurchaseProduct],
                 synchronize: true,
             }),
             graphql_1.GraphQLModule.forRoot({
@@ -50,7 +47,6 @@ AppModule = __decorate([
             }),
             user_module_1.UserModule,
             product_module_1.ProductModule,
-            board_module_1.BoardModule,
             auth_module_1.AuthModule,
             upload_module_1.UploadModule,
         ],
