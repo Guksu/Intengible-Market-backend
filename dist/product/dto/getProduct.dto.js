@@ -23,4 +23,4 @@ GetProductOutput = __decorate([
     (0, graphql_1.ObjectType)()
 ], GetProductOutput);
 exports.GetProductOutput = GetProductOutput;
-//# sourceMappingURL=searchProduct.dto.js.map
+//# sourceMappingURL=getProduct.dto.js.map

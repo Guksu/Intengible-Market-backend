@@ -11,10 +11,7 @@ import {
   RegisterProductInput,
   RegisterProductOutput,
 } from './dto/registerProduct.dto';
-import {
-  SearchProductInput,
-  SearchProductOutput,
-} from './dto/searchProduct.dto';
+import { GetProductOutput } from './dto/getProduct.dto';
 import { ProductService } from './product.service';
 
 @Resolver()
@@ -39,10 +36,8 @@ export class ProductResolver {
     return this.productService.purchaseProduct(user, purchaseProductInput);
   }
 
-  @Query((type) => SearchProductOutput)
-  async searchProduct(
-    @Args('input') searchProductInput: SearchProductInput,
-  ): Promise<SearchProductOutput> {
-    return this.productService.searchProduct(searchProductInput);
+  @Query((type) => GetProductOutput)
+  async getProduct(): Promise<GetProductOutput> {
+    return this.productService.getProduct();
   }
 }

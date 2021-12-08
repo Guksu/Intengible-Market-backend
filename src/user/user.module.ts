@@ -16,7 +16,7 @@ require('dotenv').config();
     JwtModule.register({
       secret: process.env.JWT_KEY,
       signOptions: {
-        expiresIn: 60 * 60 * 12,
+        expiresIn: 60 * 60,
       },
     }),
     TypeOrmModule.forFeature([User, Product, PurchaseProduct]),

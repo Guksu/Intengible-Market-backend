@@ -10,10 +10,7 @@ import {
   RegisterProductInput,
   RegisterProductOutput,
 } from './dto/registerProduct.dto';
-import {
-  SearchProductInput,
-  SearchProductOutput,
-} from './dto/searchProduct.dto';
+import { GetProductOutput } from './dto/getProduct.dto';
 import { Product } from './entitiy/product.entity';
 import { PurchaseProduct } from './entitiy/purchaseProduct.entity';
 
@@ -54,6 +51,11 @@ export class ProductService {
       const checkProduct = await this.product.findOne({ name });
       if (checkProduct.nowVolume === 0) {
         return { ok: false, error: 'This Product is sold out!' };
+      } else if (checkProduct.nowVolume < volume) {
+        return {
+          ok: false,
+          error: 'You bought more than the inventory of the product.',
+        };
       } else {
         checkProduct.nowVolume -= volume;
         await this.product.save(checkProduct);
@@ -68,13 +70,9 @@ export class ProductService {
     }
   }
 
-  async searchProduct({
-    name,
-  }: SearchProductInput): Promise<SearchProductOutput> {
+  async getProduct(): Promise<GetProductOutput> {
     try {
-      const searchP = await this.product.find({
-        where: { name: Like(`%${name}%`) },
-      });
+      const searchP = await this.product.find();
 
       if (searchP[0] === undefined) {
         return { ok: false, error: "Can't find Product" };

@@ -27,7 +27,7 @@ UserModule = __decorate([
             jwt_1.JwtModule.register({
                 secret: process.env.JWT_KEY,
                 signOptions: {
-                    expiresIn: 60 * 60 * 12,
+                    expiresIn: 60 * 60,
                 },
             }),
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, product_entity_1.Product, purchaseProduct_entity_1.PurchaseProduct]),

@@ -46,6 +46,12 @@ let ProductService = class ProductService {
             if (checkProduct.nowVolume === 0) {
                 return { ok: false, error: 'This Product is sold out!' };
             }
+            else if (checkProduct.nowVolume < volume) {
+                return {
+                    ok: false,
+                    error: 'You bought more than the inventory of the product.',
+                };
+            }
             else {
                 checkProduct.nowVolume -= volume;
                 await this.product.save(checkProduct);
@@ -57,11 +63,9 @@ let ProductService = class ProductService {
             return { ok: false, error: error };
         }
     }
-    async searchProduct({ name, }) {
+    async getProduct() {
         try {
-            const searchP = await this.product.find({
-                where: { name: (0, typeorm_2.Like)(`%${name}%`) },
-            });
+            const searchP = await this.product.find();
             if (searchP[0] === undefined) {
                 return { ok: false, error: "Can't find Product" };
             }

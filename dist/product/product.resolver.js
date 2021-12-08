@@ -20,7 +20,7 @@ const auth_user_decorator_1 = require("../auth/auth.user-decorator");
 const user_entity_1 = require("../user/entitiy/user.entity");
 const purchaseProduct_dto_1 = require("./dto/purchaseProduct.dto");
 const registerProduct_dto_1 = require("./dto/registerProduct.dto");
-const searchProduct_dto_1 = require("./dto/searchProduct.dto");
+const getProduct_dto_1 = require("./dto/getProduct.dto");
 const product_service_1 = require("./product.service");
 let ProductResolver = class ProductResolver {
     constructor(productService) {
@@ -32,8 +32,8 @@ let ProductResolver = class ProductResolver {
     async purchaseProduct(user, purchaseProductInput) {
         return this.productService.purchaseProduct(user, purchaseProductInput);
     }
-    async searchProduct(searchProductInput) {
-        return this.productService.searchProduct(searchProductInput);
+    async getProduct() {
+        return this.productService.getProduct();
     }
 };
 __decorate([
@@ -57,12 +57,11 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProductResolver.prototype, "purchaseProduct", null);
 __decorate([
-    (0, graphql_1.Query)((type) => searchProduct_dto_1.SearchProductOutput),
-    __param(0, (0, graphql_1.Args)('input')),
+    (0, graphql_1.Query)((type) => getProduct_dto_1.GetProductOutput),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [searchProduct_dto_1.SearchProductInput]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], ProductResolver.prototype, "searchProduct", null);
+], ProductResolver.prototype, "getProduct", null);
 ProductResolver = __decorate([
     (0, graphql_1.Resolver)(),
     __metadata("design:paramtypes", [product_service_1.ProductService])
